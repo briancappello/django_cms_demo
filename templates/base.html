@@ -1,0 +1,17 @@
+{% load cms_tags sekizai_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% page_attribute 'page_title' %}</title>
+    {% render_block 'css' %}
+    {% block extrahead %}{% endblock extrahead %}
+</head>
+<body>
+    {% cms_toolbar %} {# must *not* be inside a block tag #}
+    {% block body %}
+        {% placeholder 'content' %}
+    {% endblock body %}
+    {% render_block 'js' %} {# must *not* be inside a block tag #}
+    {% block extrabody %}{% endblock extrabody %}
+</body>
+</html>
