@@ -1,17 +1,65 @@
-{% load cms_tags sekizai_tags %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% page_attribute 'page_title' %}</title>
-    {% render_block 'css' %}
-    {% block extrahead %}{% endblock extrahead %}
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% page_attribute 'page_title' %}</title>
+
+  {# stylesheets #}
+  <link rel="stylesheet" href="{% static 'css/foundation.css' %}"/>
+  {% render_block 'css' %}
+  {% block extrahead %}{% endblock extrahead %}
+  <link rel="stylesheet" href="{% static 'css/app.css' %}"/>
 </head>
 <body>
-    {% cms_toolbar %} {# must *not* be inside a block tag #}
-    {% block body %}
+  {% cms_toolbar %}
+
+  {# header #}
+  <header>
+    <div class="top-bar">
+      <div class="top-bar-title">
+        <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+          <button class="menu-icon dark" type="button" data-toggle></button>
+        </span>
+        <strong>{{ site.name }}</strong>
+      </div>
+      <div id="responsive-menu">
+        <div class="top-bar-left">
+          <ul class="dropdown menu" data-dropdown-menu>
+            {% show_menu 0 1 100 100 'menu.html' %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {# body #}
+  {% block body %}
+    <div class="row">
+      <div class="small-12 columns">
+        <h1>{{ request.current_page }}</h1>
         {% placeholder 'content' %}
-    {% endblock body %}
-    {% render_block 'js' %} {# must *not* be inside a block tag #}
-    {% block extrabody %}{% endblock extrabody %}
+      </div>
+    </div>
+  {% endblock body %}
+
+  {# footer #}
+  <footer>
+    <div class="row column">
+      {% static_placeholder 'footer' %}
+      <div class="copyright text-center">&copy; Copyright {% now 'Y' %} FooBar Inc.</div>
+    </div>
+  </footer>
+
+  {# javascripts #}
+  {% render_block 'js' %}
+  <script type="text/javascript" src="{% static 'js/vendor/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/vendor/foundation.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+  {% block extrabody %}{% endblock extrabody %}
 </body>
 </html>

@@ -1,0 +1,17 @@
+{% load cache i18n menu_tags %}
+
+{% for child in children %}
+  <li class="
+      {% if child.ancestor %}ancestor{% endif %}
+      {% if child.selected %}active{% endif %}
+  ">
+    <a href="{{ child.get_absolute_url }}">
+      {{ child.get_menu_title }}
+    </a>
+    {% if child.children %}
+      <ul class="menu vertical">
+        {% show_menu from_level to_level extra_inactive extra_active template "" "" child %}
+      </ul>
+    {% endif %}
+  </li>
+{% endfor %}

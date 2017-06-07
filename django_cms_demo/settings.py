@@ -92,6 +92,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'sekizai.context_processors.sekizai',
+                'django_cms_demo.context_processors.site',
             ],
         },
     },
@@ -160,6 +161,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -173,6 +178,20 @@ THUMBNAIL_PROCESSORS = (
 )
 
 SITE_ID = 1
+
+CMS_LANGUAGES = {
+    1: [
+        {
+            'code': 'en-us',
+            'name': 'English',
+        },
+    ],
+    'default': {
+        'redirect_on_fallback': True,
+        'public': True,
+        'hide_untranslated': False,
+    },
+}
 
 CMS_TEMPLATES = [
     ('home.html', 'Home page template'),
