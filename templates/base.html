@@ -41,8 +41,10 @@
   {% block body %}
     <div class="row">
       <div class="small-12 columns">
-        <h1>{{ request.current_page }}</h1>
-        {% placeholder 'content' %}
+        {% block content %}
+          <h1>{{ request.current_page }}</h1>
+          {% placeholder 'content' %}
+        {% endblock content %}
       </div>
     </div>
   {% endblock body %}
