@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     'mptt',
     'sekizai',
     'treebeard',
+
+    # local apps
+    'polls',
 ]
 
 MIDDLEWARE = [
