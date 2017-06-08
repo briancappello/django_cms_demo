@@ -60,6 +60,7 @@ INSTALLED_APPS = [
 
     # local apps
     'polls',
+    'polls_cms_integration',
 ]
 
 MIDDLEWARE = [
