@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_cms_demo.auth',
+    'django_extensions',
 
     # django cms
     'cms',
