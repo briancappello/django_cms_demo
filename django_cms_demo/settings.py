@@ -59,6 +59,19 @@ INSTALLED_APPS = [
     'sekizai',
     'treebeard',
 
+    # newsblog
+    'aldryn_apphooks_config',
+    'aldryn_boilerplates',
+    'aldryn_categories',
+    'aldryn_common',
+    'aldryn_newsblog',
+    'aldryn_people',
+    'aldryn_reversion',
+    'parler',
+    'reversion',
+    'sortedm2m',
+    'taggit',
+
     # local apps
     'polls',
     'polls_cms_integration',
@@ -88,7 +101,6 @@ TEMPLATES = [
         'DIRS': [
             'templates',
         ],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'cms.context_processors.cms_settings',
@@ -99,7 +111,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'sekizai.context_processors.sekizai',
                 'django_cms_demo.context_processors.site',
+                'aldryn_boilerplates.context_processors.boilerplate',
             ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'aldryn_boilerplates.template_loaders.AppDirectoriesLoader',
+            ]
         },
     },
 ]
@@ -170,6 +188,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'aldryn_boilerplates.staticfile_finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -201,3 +225,5 @@ CMS_LANGUAGES = {
 CMS_TEMPLATES = [
     ('home.html', 'Home page template'),
 ]
+
+ALDRYN_BOILERPLATE_NAME = 'bootstrap3'
