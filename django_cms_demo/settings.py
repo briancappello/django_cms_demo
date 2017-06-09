@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'polls_cms_integration',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -93,6 +93,7 @@ TEMPLATES = [
             'context_processors': [
                 'cms.context_processors.cms_settings',
                 'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -111,13 +112,12 @@ WSGI_APPLICATION = 'django_cms_demo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'django_cms',
         'USER': 'django_cms',
         'PASSWORD': 'django_cms',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'HOST': 'postgres',
+        'PORT': 5432,
     }
 }
 

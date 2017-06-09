@@ -5,10 +5,7 @@ from django.contrib.auth.models import (
     UserManager as BaseUserManager,
     PermissionsMixin,
 )
-from django.contrib.auth.validators import (
-    ASCIIUsernameValidator,
-    UnicodeUsernameValidator,
-)
+from django.core import validators
 from django.core.mail import send_mail
 from django.utils import six, timezone
 from django.utils.translation import ugettext_lazy as _
@@ -19,14 +16,17 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
-
     username = models.CharField(
         _('username'),
-        max_length=150,
+        max_length=30,
         unique=True,
-        help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-        validators=[username_validator],
+        help_text=_('Required. 30 characters or less. Letters, digits and @/./+/-/_ only.'),
+        validators=[
+            validators.RegexValidator(r'^[\w.@+-]+$',
+                                      _('Enter a valid username. '
+                                        'This value may contain only letters, numbers '
+                                        'and @/./+/-/_ characters.'), 'invalid'),
+        ],
         error_messages={
             'unique': _("A user with that username already exists."),
         },

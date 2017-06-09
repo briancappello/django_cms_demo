@@ -1,0 +1,20 @@
+[
+{
+    "model": "django_cms_demo_auth.user",
+    "pk": 1,
+    "fields": {
+        "is_staff": true,
+        "is_active": true,
+        "first_name": "",
+        "date_joined": "2017-06-09T18:33:41.569Z",
+        "email": "a@a.com",
+        "is_superuser": true,
+        "username": "admin",
+        "user_permissions": [],
+        "groups": [],
+        "password": "pbkdf2_sha256$20000$lnAfE2v3QXYj$7PjNWCnjelqhiNEFi5Q4wwhfMmCh2UsDLYHhQlprzhg=",
+        "last_name": "",
+        "last_login": null
+    }
+}
+]
