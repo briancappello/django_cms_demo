@@ -1,0 +1,13 @@
+<nav aria-label="You are here:" role="navigation">
+  <ul class="breadcrumbs">
+  {% for node in ancestors %}
+    {% if not forloop.last %}
+      <li>
+        <a href="{{ node.get_absolute_url }}">{{ node.get_menu_title }}</a>
+      </li>
+    {% else %}
+      <li>{{ node.get_menu_title }}</li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+</nav>
