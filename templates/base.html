@@ -25,7 +25,7 @@
         <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
           <button class="menu-icon dark" type="button" data-toggle></button>
         </span>
-        <strong>{{ site.name }}</strong>
+        <strong>{{ request.site.name }}</strong>
       </div>
       <div id="responsive-menu">
         <div class="top-bar-left">
@@ -53,7 +53,7 @@
   <footer>
     <div class="row column">
       {% static_placeholder 'footer' %}
-      <div class="copyright text-center">&copy; Copyright {% now 'Y' %} FooBar Inc.</div>
+      <div class="copyright text-center">&copy; Copyright {% now 'Y' %} {{ request.site.name }}</div>
     </div>
   </footer>
 
