@@ -1,0 +1,6 @@
+{% load filters cms_tags %}
+
+{% for page in request.current_page|page_ancestors %}
+  {% page_attribute 'page_title' page.id %} |
+{% endfor %}
+{{ request.site.name }}

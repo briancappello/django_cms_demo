@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'taggit',
 
     # local apps
+    'app',
     'polls',
     'polls_cms_integration',
 ]
