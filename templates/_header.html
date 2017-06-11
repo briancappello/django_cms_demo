@@ -1,0 +1,19 @@
+{% load menu_tags %}
+
+<header>
+  <div class="top-bar">
+    <div class="top-bar-title">
+      <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+        <button class="menu-icon dark" type="button" data-toggle></button>
+      </span>
+      <strong>{{ request.site.name }}</strong>
+    </div>
+    <div id="responsive-menu">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          {% show_menu 0 1 100 100 '_menu.html' %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

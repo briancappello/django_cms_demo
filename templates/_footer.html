@@ -1,0 +1,8 @@
+{% load tags %}
+
+<footer>
+  <div class="row column">
+    {% footer_menus %}
+    <div class="copyright text-center">&copy; Copyright {% now 'Y' %} {{ request.site.name }}</div>
+  </div>
+</footer>

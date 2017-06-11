@@ -1,4 +1,4 @@
-{% load cms_tags menu_tags sekizai_tags staticfiles tags %}
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,23 +19,7 @@
   {% cms_toolbar %}
 
   {# header #}
-  <header>
-    <div class="top-bar">
-      <div class="top-bar-title">
-        <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
-          <button class="menu-icon dark" type="button" data-toggle></button>
-        </span>
-        <strong>{{ request.site.name }}</strong>
-      </div>
-      <div id="responsive-menu">
-        <div class="top-bar-left">
-          <ul class="dropdown menu" data-dropdown-menu>
-            {% show_menu 0 1 100 100 '_menu.html' %}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </header>
+  {% include '_header.html' %}
 
   {# body #}
   {% block body %}
@@ -43,7 +27,7 @@
       <div class="small-12 columns">
         {% show_breadcrumb 0 '_breadcrumbs.html' %}
         {% block content %}
-          <h1>{{ request.current_page }}</h1>
+          <h1>{{ request.current_page.get_title }}</h1>
           {% placeholder 'content' %}
         {% endblock content %}
       </div>
@@ -51,13 +35,7 @@
   {% endblock body %}
 
   {# footer #}
-  <footer>
-    <div class="row column">
-      {% footer_menus %}
-      {% static_placeholder 'footer' %}
-      <div class="copyright text-center">&copy; Copyright {% now 'Y' %} {{ request.site.name }}</div>
-    </div>
-  </footer>
+  {% include '_footer.html' %}
 
   {# javascripts #}
   {% render_block 'js' %}
