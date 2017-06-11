@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_cms_demo.auth',
     'django_extensions',
+    'debug_toolbar',
 
     # django cms
     'cms',
@@ -79,6 +80,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -228,3 +230,7 @@ CMS_TEMPLATES = [
 ]
 
 ALDRYN_BOILERPLATE_NAME = 'bootstrap3'
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'app.toolbar.show_toolbar',
+}
