@@ -7,7 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>{% include 'title.html' %}</title>
+  <title>{% include '_title.html' %}</title>
 
   {# stylesheets #}
   <link rel="stylesheet" href="{% static 'css/foundation.css' %}"/>
@@ -30,7 +30,7 @@
       <div id="responsive-menu">
         <div class="top-bar-left">
           <ul class="dropdown menu" data-dropdown-menu>
-            {% show_menu 0 1 100 100 'menu.html' %}
+            {% show_menu 0 1 100 100 '_menu.html' %}
           </ul>
         </div>
       </div>
@@ -41,7 +41,7 @@
   {% block body %}
     <div class="row">
       <div class="small-12 columns">
-        {% show_breadcrumb 0 'breadcrumbs.html' %}
+        {% show_breadcrumb 0 '_breadcrumbs.html' %}
         {% block content %}
           <h1>{{ request.current_page }}</h1>
           {% placeholder 'content' %}
