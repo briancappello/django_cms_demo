@@ -1,0 +1,10 @@
+.footer-menu {
+    display: inline-block;
+    vertical-align: top;
+    list-style: none;
+    margin: 0;
+    padding: 20px;
+}
+.footer-menu li:first-of-type {
+    font-weight: bold;
+}

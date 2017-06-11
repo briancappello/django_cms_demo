@@ -1,0 +1,6 @@
+<ul class="footer-menu">
+  <li><a href="{{ root_node.get_absolute_url }}">{{ root_node.get_menu_title }}</a></li>
+  {% for node in root_node.children %}
+    <li><a href="{{ node.get_absolute_url }}">{{ node.get_menu_title }}</a></li>
+  {% endfor %}
+</ul>
