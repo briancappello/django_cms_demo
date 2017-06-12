@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+def get_boolean_env(name, default):
+    default = 'true' if default else 'false'
+    return os.getenv(name, default).lower() in ['true', 'yes', '1']
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,10 +29,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY',
                        '@3)de5&0pzr2s_n($5jx@y&n&ef94au*#ytq!8qwa-8bqfnrws')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', '').lower() in ['true', 'yes', '1']
+DEBUG = get_boolean_env('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',') \
+                if os.getenv('DJANGO_ALLOWED_HOSTS') else []
 
+USE_X_FORWARDED_HOST = get_boolean_env('DJANGO_USE_X_FORWARDED_HOST', False)
 
 # Application definition
 
@@ -175,19 +182,22 @@ LANGUAGES = [
 
 LANGUAGE_CODE = 'en'  # the default language django should use
 
-TIME_ZONE = 'UTC'
+# default timezone to localize dates to
+# timezones are always stored as UTC as long as USE_TZ = True
+TIME_ZONE = os.getenv('DJANGO_TIMEZONE', 'UTC')
+USE_TZ = True
 
 USE_I18N = True
 
 USE_L10N = True
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.getenv('DJANGO_STATIC_ROOT',
+                        os.path.join(BASE_DIR, 'collected_static'))
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -200,7 +210,8 @@ STATICFILES_FINDERS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.getenv('DJANGO_MEDIA_ROOT',
+                       os.path.join(BASE_DIR, 'media'))
 
 THUMBNAIL_HIGH_RESOLUTION = True
 
