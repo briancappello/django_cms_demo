@@ -1,0 +1,14 @@
+---
+dependencies:
+  - build-essential
+  - python3.5
+  - python3.5-dev
+  - python3-pip
+  - supervisor
+  - git
+
+pip: pip3
+
+supervisor_svc: supervisor
+supervisor_dir: /etc/supervisor/conf.d
+supervisor_ext: conf

@@ -1,0 +1,7 @@
+---
+- name: install virtualenv
+  pip: name=virtualenv state=latest executable={{ pip }}
+
+- name: create virtualenv {{ virtualenv_dir }}
+  command: virtualenv -p {{ python_path }} {{ virtualenv_dir }}
+           creates={{ virtualenv_dir }}/bin/activate

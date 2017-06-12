@@ -1,0 +1,26 @@
+---
+- name: install gunicorn
+  pip: virtualenv={{ virtualenv_dir }} name=gunicorn
+
+- name: create gunicorn user
+  user: name={{ gunicorn_user }} state=present
+
+- name: create gunicorn group
+  group: name={{ gunicorn_group }} state=present
+
+- name: add gunicorn user to gunicorn group
+  user: name={{ gunicorn_user }} group={{ gunicorn_group }} state=present
+
+- name: create gunicorn startup script
+  template: src=gunicorn_start.sh.j2
+            dest={{ virtualenv_dir }}/bin/gunicorn_start
+            owner={{ gunicorn_user }}
+            group={{ gunicorn_group }}
+            mode=0755
+            backup=yes
+
+- name: gunicorn run directory
+  file: path={{ gunicorn_run_dir }}
+        owner={{ gunicorn_user }}
+        group={{ gunicorn_group }}
+        state=directory

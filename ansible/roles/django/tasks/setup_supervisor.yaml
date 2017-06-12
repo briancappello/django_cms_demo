@@ -1,0 +1,26 @@
+---
+- name: start and enable the supervisor service
+  service: name={{ supervisor_svc }} state=started enabled=yes
+
+- name: create the supervisor config file
+  template: src=supervisor_config.j2
+            dest={{ supervisor_dir }}/{{ app_name }}.{{ supervisor_ext }}
+            backup=yes
+
+- name: create supervisor log folder
+  file: path={{ application_log_dir }}
+        owner={{ gunicorn_user }}
+        group={{ gunicorn_group }}
+        mode=0744
+        state=directory
+
+- name: create gunicorn supervisor log file if necessary
+  copy: content=""
+        dest={{ gunicorn_log_file }}
+        owner={{ gunicorn_user }}
+        group={{ gunicorn_group }}
+        mode=0664
+        force=no
+
+- name: load supervisor config
+  supervisorctl: name={{ app_name }} state=present

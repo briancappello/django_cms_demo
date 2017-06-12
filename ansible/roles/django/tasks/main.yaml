@@ -1,0 +1,44 @@
+---
+- include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+      - '{{ os_family }}.yaml'
+      skip: yes
+  tags: always
+
+- name: install python dependencies
+  package: name={{ item }} state=present
+  with_items: '{{ dependencies }}'
+
+- name: update pip and setuptools
+  pip:
+    name: '{{ item }}'
+    state: latest
+    executable: '{{ pip }}'
+  with_items:
+    - pip
+    - setuptools
+
+- include: install_virtualenv.yaml
+
+- include: install_gunicorn.yaml
+
+- include: setup_git_repo.yaml
+
+- include: setup_django_app.yaml
+  tags: django
+
+- include: setup_supervisor.yaml
+  tags: supervisor
+
+- name: Ensure that the application file permissions are set properly
+  file: path={{ virtualenv_dir }}
+        recurse=yes
+        owner={{ gunicorn_user }}
+        group={{ gunicorn_group }}
+        state=directory
+  tags: django
+  notify: restart application
+
+- include: setup_nginx.yaml
+  tags: django

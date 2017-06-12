@@ -1,0 +1,60 @@
+---
+- name: install packages from requirements.txt
+  pip: virtualenv={{ virtualenv_dir }} requirements={{ requirements_path }}
+
+- name: create virtualenv postactivate script
+  template: src=virtualenv_postactivate.sh.j2
+            dest={{ virtualenv_dir }}/bin/postactivate
+            owner={{ gunicorn_user }}
+            group={{ gunicorn_group }}
+            mode=0640
+            backup=yes
+
+- name: Run the Django syncdb command
+  django_manage:
+    command: syncdb
+    app_path: '{{ project_dir }}'
+    virtualenv: '{{ virtualenv_dir }}'
+    settings: '{{ django_settings_module }}'
+  environment: '{{ django_environment }}'
+  when: run_django_syncdb is defined and run_django_syncdb
+  tags: django.syncdb
+
+- name: run django migrations
+  django_manage:
+    command: migrate
+    app_path: '{{ project_dir }}'
+    virtualenv: '{{ virtualenv_dir }}'
+    settings: '{{ django_settings_module }}'
+  environment: '{{ django_environment }}'
+  when: run_django_db_migrations is defined and run_django_db_migrations
+  tags: django.migrate
+
+- name: run django fixtures
+  django_manage:
+    command: loaddata
+    fixtures: '{{ project_dir }}/fixtures.json'
+    app_path: '{{ project_dir }}'
+    virtualenv: '{{ virtualenv_dir }}'
+    settings: '{{ django_settings_module }}'
+  environment: '{{ django_environment }}'
+  when: run_django_fixtures is defined and run_django_fixtures
+  tags: django.fixtures
+
+- name: Run Django collectstatic
+  django_manage:
+    command: collectstatic
+    app_path: '{{ project_dir }}'
+    virtualenv: '{{ virtualenv_dir }}'
+    settings: '{{ django_settings_module }}'
+  environment: '{{ django_environment }}'
+  when: run_django_collectstatic is defined and run_django_collectstatic
+  tags: django.collectstatic
+
+- name: set collected static files owned by nginx
+  file:
+    path: '{{ django_static_root }}'
+    owner: '{{ nginx_user }}'
+    recurse: yes
+  when: run_django_collectstatic is defined and run_django_collectstatic
+  tags: django.collectstatic

@@ -1,0 +1,27 @@
+---
+- name: setup nginx config for {{ app_name }}
+  template: src=django_app.nginx.j2
+            dest={{ nginx_sites_available_dir }}/{{ app_name }}
+            backup=yes
+  notify: reload nginx
+
+- name: enable nginx config for {{ app_name }}
+  file:
+    src: '{{ nginx_sites_available_dir }}/{{ app_name }}'
+    dest: '{{ nginx_sites_enabled_dir }}/{{ app_name }}'
+    state: link
+  notify: reload nginx
+
+- name: make sure static files dir exists
+  file:
+    path: '{{ django_static_root }}'
+    owner: '{{ nginx_user }}'
+    group: '{{ nginx_user }}'
+    state: directory
+
+- name: make sure media files dir exists
+  file:
+    path: '{{ django_media_root }}'
+    owner: '{{ nginx_user }}'
+    group: '{{ nginx_user }}'
+    state: directory

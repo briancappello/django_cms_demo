@@ -3,3 +3,5 @@ media/
 *.pyc
 *.pyo
 __pycache__/
+
+.password
