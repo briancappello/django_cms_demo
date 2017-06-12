@@ -87,7 +87,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
@@ -95,7 +94,9 @@ MIDDLEWARE_CLASSES = [
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware',
+    # FIXME-i18n enable locale middlewares once on django 1.10+ (see also urls.py)
+    #'django.middleware.locale.LocaleMiddleware',
+    #'cms.middleware.language.LanguageCookieMiddleware',
 ]
 
 ROOT_URLCONF = 'django_cms_demo.urls'
@@ -169,10 +170,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGES = [
-    ('en-us', 'English'),
+    ('en', 'English'),
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'  # the default language django should use
 
 TIME_ZONE = 'UTC'
 
@@ -215,7 +216,7 @@ SITE_ID = 1
 CMS_LANGUAGES = {
     1: [
         {
-            'code': 'en-us',
+            'code': 'en',
             'name': 'English',
         },
     ],

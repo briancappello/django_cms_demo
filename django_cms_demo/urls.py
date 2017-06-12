@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import url, include
+# from django.conf.urls.i18n import i18n_patterns  # FIXME-i18n
 from django.conf.urls.static import static
 from django.contrib import admin
+
+# FIXME-i18n wrap admin.site.urls and cms.urls with:
+# i18n_patterns(*urlpatterns, prefix_default_language=False)
+# this results in no prefix for default language,
+# otherwise it prefixes urls with the lang
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
