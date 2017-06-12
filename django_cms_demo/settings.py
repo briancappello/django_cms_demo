@@ -20,10 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@3)de5&0pzr2s_n($5jx@y&n&ef94au*#ytq!8qwa-8bqfnrws'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY',
+                       '@3)de5&0pzr2s_n($5jx@y&n&ef94au*#ytq!8qwa-8bqfnrws')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', '').lower() in ['true', 'yes', '1']
 
 ALLOWED_HOSTS = []
 
@@ -134,11 +135,11 @@ WSGI_APPLICATION = 'django_cms_demo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_cms',
-        'USER': 'django_cms',
-        'PASSWORD': 'django_cms',
-        'HOST': 'postgres',
-        'PORT': 5432,
+        'NAME': os.getenv('DJANGO_DATABASE_NAME', 'django_cms'),
+        'USER': os.getenv('DJANGO_DATABASE_USER', 'django_cms'),
+        'PASSWORD': os.getenv('DJANGO_DATABASE_PASSWORD', 'django_cms'),
+        'HOST': os.getenv('DJANGO_DATABASE_HOST', 'postgres'),
+        'PORT': os.getenv('DJANGO_DATABASE_PORT', 5432),
     }
 }
 
