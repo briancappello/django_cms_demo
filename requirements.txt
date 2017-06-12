@@ -43,7 +43,7 @@ olefile==0.44
 phonenumbers==8.5.1
 phonenumberslite==8.5.1
 Pillow==4.1.1
--e git://github.com/paramono/django-polls.git@273fea2aee02c6b61fbdb03c1b59ebfb000ff22e#egg=polls
+-e git+https://github.com/paramono/django-polls.git@273fea2aee02c6b61fbdb03c1b59ebfb000ff22e#egg=polls
 psycopg2==2.7.1
 python-dateutil==2.6.0
 python-slugify==1.2.0
